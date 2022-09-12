@@ -8,6 +8,7 @@
 		input, button, .output {padding: 0.4em; border-radius: 5px; font-family: monospace; margin: 0.5em 0; font-size: 1.4em;}
 		input {background-color: #bbe; }
 		.output {background-color: #ada;}
+		input {width: 5em;}
 	</style>
 	<script src="43_functions.js"></script>
 </head>
@@ -18,8 +19,21 @@
 		<h2>Get Hypotenuse</h2>
 		<div>
 			<input class="a" placeholder="a" type="number">
-			<input class="b" placeholder="b" type="number">
+			<input class="b" placeholder="b" type="number" min="0" step="2§">
 			<button>Get Hypotenuse</button>
+			<div class="output">&nbsp;</div>
+		</div>
+	</div>
+
+	<div class="quadratic">
+		<h2>Solve Quadratic equation</h2>
+		<div>
+			<div>
+				<input class="a" placeholder="a" type="number"> x^2 +
+				<input class="b" placeholder="b" type="number"> x +
+				<input class="c" placeholder="c" type="number"> = 0
+			</div>
+			<button>Solve</button>
 			<div class="output">&nbsp;</div>
 		</div>
 	</div>
@@ -37,6 +51,18 @@
 			const b = Number(document.querySelector(".hypotenuse input.b").value)
 			const c = getHypotenuse(a, b)
 			hypotenuseOutput.textContent = c
+		}
+
+		const quadraticButton = document.querySelector(".quadratic button")
+		quadraticButton.addEventListener("click", showQuadratic)
+
+		function showQuadratic() {
+			const a = Number(document.querySelector(".quadratic input.a").value)
+			const b = Number(document.querySelector(".quadratic input.b").value)
+			const c = Number(document.querySelector(".quadratic input.c").value)
+			const results = solveQuadratic(a, b, c)
+			const qOutput = document.querySelector(".quadratic .output")
+			qOutput.textContent = results.join(", ")
 		}
 
 
