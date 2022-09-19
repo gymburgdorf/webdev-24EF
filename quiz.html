@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Project</title>
+  <link rel="stylesheet" href="https://gymburgdorf.github.io/helpers/basicstyle.css"></link>
+</head>
+<body>
+  <h1>Quiz</h1>
+  <div class="question">
+    <div class="title">Wie ist das Gymnasium Burgdorf?</div>
+    <div>
+      <button>🦄 <span class="answer_a">elitär</span></button>
+      <button>🦘 familiär</button>
+      <button>🐸 prekär</button>
+      <button>🐁 vulgär</button>
+    </div>
+  </div>
+  <script>
+    async function getQuestions() {
+      const response = await fetch("https://gymburgdorf.github.io/webdev/json/quiz.json")
+      const data = await response.json()
+      console.log(data)
+
+      const randomIndex = Math.floor(data.length * Math.random())
+      console.log(randomIndex)
+
+      const question = data[randomIndex]
+      renderQuestion(question)
+    }
+
+
+    function renderQuestion(question) {
+      const qdiv = document.querySelector(".question")
+      console.log(question)
+      qdiv.innerHTML = `
+      <div class="title">${question.title}</div>
+      <div>
+        <button>🦄 <span class="answer_a">${question.a}</span></button>
+        <button>🦘 <span class="answer_b">${question.b}</span></button>
+        <button>🐸 <span class="answer_c">${question.c}</span></button>
+        <button>🐁 <span class="answer_d">${question.d}</span></button>
+      </div>
+      `
+    }
+
+    getQuestions()
+  </script>
+</body>
+</html>
