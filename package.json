@@ -1,3 +1,6 @@
 {
-  "name": "webdev-24EF"
+  "name": "webdev-24EF",
+  "scripts": {
+    "start": "npx serve"
+  }
 }
