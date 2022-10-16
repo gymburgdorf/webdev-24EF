@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quizmaster</title>
+	<script src="https://websocket.hidora.com/WebsocketClient.js"></script>
+  <link rel="stylesheet" href="https://gymburgdorf.github.io/helpers/basicstyle.css"></link>
+</head>
+<body>
+  <h1>Quiz Master</h1>
+  <div>
+    <div class="userlist"></div>
+    <input class="message" />
+    <button class="sendToAll">send to all</button>
+    <button class="sendToOpener">send to opener</button>
+    <button class="sendToUser">send to user</button>
+  </div>
+  <div class="log"></div>
+	<script type="module">
+    const ws = await WS.connect("testquiz", "👑")
+    log(`I connected as ${ws.username}!`);
+    ws.onMessage((msg) => log(JSON.stringify(msg)));
+    ws.onUserStatus(showUsers);
+    ws.getUsers();
+
+    function showUsers(userlist) {
+      document.querySelector('.userlist').innerHTML = userlist
+        .map((u) => `<span>${u}</span>`)
+        .join('');
+    }
+
+    function log(m) {
+      const l = document.querySelector('.log');
+      l.insertAdjacentHTML('beforeEnd', `<div>${m}</div>`);
+    }
+
+    document.querySelector('.sendToAll').addEventListener('click', () => {
+      ws.sendToAll(document.querySelector('.message').value);
+    });
+    document.querySelector('.sendToUser').addEventListener('click', () => {
+      ws.sendToUser(document.querySelector('.message').value);
+    });
+
+    async function getQuestions() {
+      const response = await fetch("https://gymburgdorf.github.io/webdev/json/quiz.json")
+      const data = await response.json()
+      const randomIndex = Math.floor(data.length * Math.random())
+      const question = data[randomIndex]
+      //renderQuestion(question)
+    }
+
+    getQuestions()
+  </script>
+  <script>
+
+  </script>
+</body>
+</html>
